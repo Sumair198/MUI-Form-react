@@ -33,7 +33,7 @@ import RestoreIcon from '@mui/icons-material/Restore';
 // import FavoriteIcon from '@mui/icons-material/Favorite';
 import LocationOnIcon from '@mui/icons-material/LocationOn';
 
-import { Formik, Form, Field } from "formik";
+import { Formik, Form, Field, useFormik } from "formik";
 
 import TextField from '@mui/material/TextField';
 import AccountCircle from '@mui/icons-material/AccountCircle';
@@ -45,6 +45,13 @@ function submithandle(values)
 }
 
 function App() {
+  const formik = useFormik({
+    initialValues: {
+      email: '',
+      password: '',
+    },
+    onSubmit: submithandle
+    });
   return (
     <div>
       <Box sx={{ flexGrow: 1 }}>
@@ -219,8 +226,8 @@ function App() {
         </Form>
       </Formik> */}
       <div className='forms1'>
-      <Formik initialValues={{ email: "", password: "" }}>
-      <form onSubmit={submithandle}>
+      
+      <form onSubmit={formik.handleSubmit}>
         
         <h5>User-Form</h5>
       
@@ -228,16 +235,15 @@ function App() {
        
         <Box sx={{ display: 'flex', alignItems: 'flex-end' }}>
           <AccountCircle sx={{ color: 'action.active', mr: 1, my: 0.5 }} />
-          <TextField type='email'  label="Email" variant="standard" />
+          <TextField name='email' type='email'  label="Email" variant="standard" value={formik.values.email} onChange={formik.handleChange}/>
         </Box>
         <Box sx={{ display: 'flex', alignItems: 'flex-end' }}>
           <AccountCircle sx={{ color: 'action.active', mr: 1, my: 0.5 }} />
-          <TextField type='password'  label="Password" variant="standard" />
+          <TextField name='password' type='password'  label="Password" variant="standard" value={formik.values.password} onChange={formik.handleChange} />
         </Box>
       </Box>
-      <button type='submit'>Submit</button>
+      <Button variant="contained" type='submit'>Submit</Button>
       </form>
-      </Formik>
       </div>
 
 
